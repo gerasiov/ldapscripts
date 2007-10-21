@@ -18,16 +18,16 @@
 #  USA.
 
 # Configuration / variables section
-PREFIX = /usr/local
+PREFIX = /usr
 
 # Where to install scripts
 BINDIR = $(PREFIX)/bin
 # Where to install man pages
-MANDIR = $(PREFIX)/man
+MANDIR = $(PREFIX)/share/man
 # Where to install configuration files
-ETCDIR = $(PREFIX)/etc/ldapscripts
+ETCDIR = /etc/ldapscripts
 # Where to install the runtime file
-RUNDIR = $(ETCDIR)
+RUNDIR = $(PREFIX)/share/ldapscripts
 
 ### Do not edit ###
 SHELL=/bin/sh
@@ -95,34 +95,34 @@ configure:
 install:	installbin installman installetc
 installbin:	configure
 	@echo -n 'Installing scripts into $(BINDIR)... '
-	@mkdir -p '$(BINDIR)' 2>/dev/null
+	@mkdir -p '$(DESTDIR)$(BINDIR)' 2>/dev/null
 	@for i in $(BINFILES) ; do \
-		install -m 750 "bin/$$i.patched" "$(BINDIR)/$$i" ; \
+		install -m 750 "bin/$$i.patched" "$(DESTDIR)$(BINDIR)/$$i" ; \
 	done
 	@echo 'ok. '
 
 installman:
 	@echo -n 'Installing man files into $(MANDIR)... '
-	@mkdir -p '$(MANDIR)/man1' 2>/dev/null
+	@mkdir -p '$(DESTDIR)$(MANDIR)/man1' 2>/dev/null
 	@for i in $(MAN1FILES) ; do \
-		cat "man/man1/$$i" | gzip - > "$(MANDIR)/man1/`basename $$i`.gz" ; \
+		cat "man/man1/$$i" | gzip -9 - > "$(DESTDIR)$(MANDIR)/man1/`basename $$i`.gz" ; \
 	done
-	@mkdir -p '$(MANDIR)/man5' 2>/dev/null
+	@mkdir -p '$(DESTDIR)$(MANDIR)/man5' 2>/dev/null
 	@for i in $(MAN5FILES) ; do \
-		cat "man/man5/$$i" | gzip - > "$(MANDIR)/man5/`basename $$i`.gz" ; \
+		cat "man/man5/$$i" | gzip -9 - > "$(DESTDIR)$(MANDIR)/man5/`basename $$i`.gz" ; \
 	done
 	@echo 'ok. '
 
 installetc:
 	@echo -n 'Installing configuration files into $(ETCDIR)... '
-	@mkdir -p '$(ETCDIR)' 2>/dev/null
-	@install -m 640 -b 'etc/$(ETCFILE).patched' '$(ETCDIR)/$(ETCFILE)'
-	@install -m 440 -b 'etc/$(PWDFILE)' '$(ETCDIR)'
+	@mkdir -p '$(DESTDIR)$(ETCDIR)' 2>/dev/null
+	@install -m 640 -b 'etc/$(ETCFILE).patched' '$(DESTDIR)$(ETCDIR)/$(ETCFILE)'
+	@install -m 440 -b 'etc/$(PWDFILE)' '$(DESTDIR)$(ETCDIR)'
 	@for i in $(TMPLFILES) ; do \
-		install -m 440 "etc/$$i" '$(ETCDIR)' ; \
+		install -m 440 "etc/$$i" '$(DESTDIR)$(ETCDIR)' ; \
 	done
-	@mkdir -p '$(RUNDIR)' 2>/dev/null
-	@install -m 440 'etc/$(RUNFILE).patched' '$(RUNDIR)/$(RUNFILE)'
+	@mkdir -p '$(DESTDIR)$(RUNDIR)' 2>/dev/null
+	@install -m 440 'etc/$(RUNFILE).patched' '$(DESTDIR)$(RUNDIR)/$(RUNFILE)'
 	@echo 'ok. '
 
 # Uninstall targets

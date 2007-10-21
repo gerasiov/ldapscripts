@@ -1,0 +1,85 @@
+#  Copyright (C) 2005 Ganaël LAPLANCHE - Linagora
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 2
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+#  USA.
+
+##### Beginning of ldapscripts configuration #####
+
+getfield() {
+    field="$1"
+    pamfile='/etc/pam_ldap.conf'
+    value=`egrep "^[ \\t]*$field[ \\t]+" $pamfile | sed -e 's,\(^\|[\t ]\+\),\t,g' | cut -f 3`
+    echo ${value:-$2}
+}
+
+getsuffix() {
+    field="$1"
+    value=`getfield "$1" | sed -e "s/,.*$//"`
+    echo ${value:-$2}
+}
+
+# LDAP Configuration
+SERVER=`getfield host       ''`
+BINDDN=`getfield rootbinddn ''`
+BINDPWD=`cat /etc/ldap.secret`
+
+SUFFIX=`getfield base`
+GSUFFIX=`getsuffix nss_base_group   'ou=Group'`
+USUFFIX=`getsuffix nss_base_passwd  'ou=People'`
+MSUFFIX=`getsuffix nss_base_hosts   'ou=Hosts'`
+
+# Start with these IDs *if no entry found in LDAP*
+UIDSTART=`getfield pam_min_uid  1000`
+GIDSTART=`getfield pam_min_gid  1000`
+MIDSTART="1000"
+
+# User properties
+[ -f /etc/adduser.conf ] && . /etc/adduser.conf
+USHELL=${DSHELL:-"/bin/bash"}
+UHOMES=${DHOME:-"/home"}"/%u"
+CREATEHOMES="no"
+
+# User passwords generation
+# Command-line used to generate a (random ?) password for the users (you may use %u for username here)
+PASSWORDGEN="head -c8 /dev/random | uuencode -m - | sed -n -e '2s|=*$||;2p' | sed -e 's|+||g' -e 's|/||g'"
+#PASSWORDGEN="echo changeme"
+#PASSWORDGEN="echo %u"
+
+# User passwords recording
+# you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS 
+# (useful when performing a massive creation / net rpc vampire)
+# WARNING !!!! DO NOT FORGET TO DELETE THE GENERATED FILE WHEN DONE !
+# WARNING !!!! DO NOT FORGET TO TURN OFF RECORDING WHEN DONE !
+RECORDPASSWORDS="no"
+PASSWORDFILE="/var/log/ldapscripts_passwd.log"
+
+# Where to log
+LOGFILE="/var/log/ldapscripts.log"
+
+# Various binaries used within scripts
+LDAPSEARCHBIN=`which ldapsearch`
+LDAPADDBIN=`which ldapadd`
+LDAPDELETEBIN=`which ldapdelete`
+LDAPMODIFYBIN=`which ldapmodify`
+LDAPMODRDNBIN=`which ldapmodrdn`
+LDAPPASSWDBIN=`which ldappasswd`
+
+# Getent command to use - choose the ones used on your system. Leave blank or comment for auto-guess.
+# GNU/Linux
+GETENTPWCMD="getent passwd"
+GETENTGRCMD="getent group"
+
+TMPDIR="/tmp"
+##### End of configuration #####
