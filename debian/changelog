@@ -1,3 +1,17 @@
+ldapscripts (1.8.0-2) unstable; urgency=low
+
+  * runtime.debian: fix warnings appears if libpam-ldap not installed.
+  * runtime.debian: replace usage of libpam-ldap with libnss-ldap, because
+    ldapscripts recommends the second one.
+  * runtime.debian: replace egrep|sed|cut with simple awk.
+  * runtime.debian: fix error if host but not uri is specified in
+    libnss-ldap.conf.
+  * Add README.Debian with some info.
+  * Add VCS info in debian/control.
+  * Remove debian/ldapscripts.conf as it's not used anymore.
+
+ -- Alexander GQ Gerasiov <gq@cs.msu.su>  Sun, 05 Jul 2009 14:51:40 +0400
+
 ldapscripts (1.8.0-1) unstable; urgency=low
 
   * New upstream release. (Closes: #471500, #494101, #502678, #504698, #457251.)

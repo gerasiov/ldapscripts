@@ -1,0 +1,7 @@
+ldapscripts package shipped in Debian is slightly modified to work out of the
+box. If you have libnss-ldap installed and configured, ldapscripts will use
+configuration from libnss-ldap.conf. More details could be found in comments
+inside /etc/ldapscripts/ldapscripts.conf
+
+If you have any problems with ldapscripts' utilities, first look on
+/var/log/ldapscripts.log where all details, warnings and errors goes.

@@ -22,9 +22,13 @@
 ##### Beginning of ldapscripts configuration #####
 
 getfield() {
-    field="$1"
-    pamfile='/etc/pam_ldap.conf'
-    value=$(egrep "^[ \\t]*$field[ \\t]+" $pamfile | sed -e 's,\(^\|[\t ]\+\),\t,g' | cut -f 3)
+    local field="$1"
+    local nssconffile='/etc/libnss-ldap.conf'
+    if [ -f "$nssconffile" ];then
+	local value=$(awk "/^\s*$field/ {print \$2}" /etc/libnss-ldap.conf)
+    else
+	local value="$2"
+    fi
     echo ${value:-$2}
 }
 
@@ -35,10 +39,10 @@ getsuffix() {
 }
 
 # LDAP Configuration
-SERVER=$(getfield uri '$(getfield host '')')
+SERVER=$(getfield uri "$(getfield host '')")
 BINDDN=$(getfield rootbinddn '')
-if [ -f /etc/pam_ldap.secret ];then
-	BINDPWDFILE=/etc/pam_ldap.secret
+if [ -f /etc/libnss-ldap.secret ];then
+	BINDPWDFILE=/etc/libnss-ldap.secret
 elif [ -f /etc/ldap.secret ];then
 	BINDPWDFILE=/etc/ldap.secret
 fi
