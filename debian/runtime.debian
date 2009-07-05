@@ -1,0 +1,59 @@
+### This file predefine some ldapscripts variables for Debian boxes.
+#
+#  Copyright (c) 2005 Ganaël LAPLANCHE - Linagora
+#  Copyright (c) 2005-2007 Pierre Habouzit
+#  Copyright (c) 2009 Alexander GQ Gerasiov
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 2
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+#  USA.
+
+##### Beginning of ldapscripts configuration #####
+
+getfield() {
+    field="$1"
+    pamfile='/etc/pam_ldap.conf'
+    value=$(egrep "^[ \\t]*$field[ \\t]+" $pamfile | sed -e 's,\(^\|[\t ]\+\),\t,g' | cut -f 3)
+    echo ${value:-$2}
+}
+
+getsuffix() {
+    field="$1"
+    value="$(getfield "$1" | sed -e "s/,.*$//")"
+    echo ${value:-$2}
+}
+
+# LDAP Configuration
+SERVER=$(getfield uri '$(getfield host '')')
+BINDDN=$(getfield rootbinddn '')
+if [ -f /etc/pam_ldap.secret ];then
+	BINDPWDFILE=/etc/pam_ldap.secret
+elif [ -f /etc/ldap.secret ];then
+	BINDPWDFILE=/etc/ldap.secret
+fi
+
+SUFFIX=`getfield base`
+GSUFFIX=`getsuffix nss_base_group   'ou=Group'`
+USUFFIX=`getsuffix nss_base_passwd  'ou=People'`
+MSUFFIX=`getsuffix nss_base_hosts   'ou=Hosts'`
+
+# User properties
+[ -f /etc/adduser.conf ] && . /etc/adduser.conf
+USHELL=${DSHELL:-"/bin/bash"}
+UHOMES=${DHOME:-"/home"}"/%u"
+HOMESKEL=${SKEL:-"/etc/skel"}
+HOMEPERMS=${DIR_MODE:-"0755"}
+
+TMPDIR="/tmp"
+##### End of configuration #####

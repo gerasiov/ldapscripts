@@ -1,0 +1,88 @@
+diff -Nur -x '*.orig' -x '*~' ldapscripts/etc/ldapscripts.conf ldapscripts.new/etc/ldapscripts.conf
+--- ldapscripts/etc/ldapscripts.conf	2009-06-22 21:06:29.184731006 +0400
++++ ldapscripts.new/etc/ldapscripts.conf	2009-06-22 21:09:02.412731232 +0400
+@@ -15,22 +15,32 @@
+ #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+ #  USA.
+ 
++# Note for Debian users:
++# On Debian system ldapscripts will try to parse and use some system config.
++# Look on commented variables and description lines started with DEBIAN.
++# But you could override it's values here.
++
++
+ # LDAP Configuration
+-SERVER="ldap://localhost"
+-BINDDN="cn=Manager,dc=example,dc=com"
++# DEBIAN: values from /etc/pam_ldap.conf are used.
++#SERVER="ldap://localhost"
++#BINDDN="cn=Manager,dc=example,dc=com"
++
+ # The following file contains the raw password of the binddn
+ # Create it with something like : echo -n 'secret' > $BINDPWDFILE
+ # WARNING !!!! Be careful not to make this file world-readable
+-BINDPWDFILE="/etc/ldapscripts/ldapscripts.passwd"
++# DEBIAN: /etc/pam_ldap.secret or /etc/ldap.secret are used.
++#BINDPWDFILE="/etc/ldapscripts/ldapscripts.passwd"
+ # For older versions of OpenLDAP, it is still possible to use
+ # unsecure command-line passwords by defining the following option
+ # AND commenting the previous one (BINDPWDFILE takes precedence)
+ #BINDPWD="secret"
+ 
+-SUFFIX="dc=example,dc=com" # Global suffix
+-GSUFFIX="ou=Groups"        # Groups ou (just under $SUFFIX)
+-USUFFIX="ou=Users"         # Users ou (just under $SUFFIX)
+-MSUFFIX="ou=Machines"      # Machines ou (just under $SUFFIX)
++# DEBIAN: values from /etc/pam_ldap.conf are used.
++#SUFFIX="dc=example,dc=com" # Global suffix
++#GSUFFIX="ou=Groups"        # Groups ou (just under $SUFFIX)
++#USUFFIX="ou=Users"         # Users ou (just under $SUFFIX)
++#MSUFFIX="ou=Machines"      # Machines ou (just under $SUFFIX)
+ 
+ # Start with these IDs *if no entry found in LDAP*
+ GIDSTART="10000" # Group ID
+@@ -38,11 +48,12 @@
+ MIDSTART="20000" # Machine ID
+ 
+ # User properties
+-USHELL="/bin/sh"
+-UHOMES="/home/%u"     # You may use %u for username here
++# DEBIAN: values from /etc/adduser.conf are used.
++#USHELL="/bin/sh"
++#UHOMES="/home/%u"     # You may use %u for username here
+ CREATEHOMES="no"      # Create home directories and set rights ?
+-HOMESKEL="/etc/skel"  # Directory where the skeleton files are located. Ignored if undefined or nonexistant.
+-HOMEPERMS="700"       # Default permissions for home directories
++#HOMESKEL="/etc/skel"  # Directory where the skeleton files are located. Ignored if undefined or nonexistant.
++#HOMEPERMS="755"       # Default permissions for home directories
+ 
+ # User passwords generation
+ # Command-line used to generate a password for added users (you may use %u for username here)
+@@ -82,12 +93,12 @@
+ 
+ # Character set conversion : $ICONVCHAR <-> UTF-8
+ # Comment ICONVBIN to disable UTF-8 conversion
+-ICONVBIN="/usr/bin/iconv"
++#ICONVBIN="/usr/bin/iconv"
+ #ICONVCHAR="ISO-8859-15"
+ 
+ # Base64 decoding
+ # Comment UUDECODEBIN to disable Base64 decoding
+-UUDECODEBIN="/usr/bin/uudecode"
++#UUDECODEBIN="/usr/bin/uudecode"
+ 
+ # Getent command to use - choose the ones used
+ # on your system. Leave blank or comment for auto-guess.
+diff -Nur -x '*.orig' -x '*~' ldapscripts/lib/runtime ldapscripts.new/lib/runtime
+--- ldapscripts/lib/runtime	2009-06-22 21:06:29.184731006 +0400
++++ ldapscripts.new/lib/runtime	2009-06-22 21:06:30.608731197 +0400
+@@ -595,6 +595,9 @@
+ 
+ ### Source configuration file
+ 
++_RUNTIME_DEBIAN="/usr/share/ldapscripts/runtime.debian"
++. "$_RUNTIME_DEBIAN" || end_die "Unable to source runtime.debian, exiting..."
++
+ _CONFIGFILE="/etc/ldapscripts/ldapscripts.conf"
+ . "$_CONFIGFILE" || end_die "Unable to source configuration file ($_CONFIGFILE), exiting..."
+ 

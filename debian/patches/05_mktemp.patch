@@ -1,0 +1,21 @@
+diff -Nur -x '*.orig' -x '*~' ldapscripts/lib/runtime ldapscripts.new/lib/runtime
+--- ldapscripts/lib/runtime	2009-06-24 16:43:53.852731796 +0400
++++ ldapscripts.new/lib/runtime	2009-06-24 16:44:09.584731540 +0400
+@@ -126,15 +126,10 @@
+ mktempf () {
+   # Avoid creating two temporary files (must have been released before)
+   [ -n "$_TMPFILE" ] && end_die "Error allocating temporary file $_TMPFILE"
+-  # Name temp file
+-  _TMPFILE="$TMPDIR/`basename $0`.`date '+%Y%m%d-%H%M%S'`.$$.`head -c4 /dev/random | od -t u4 | head -n 1 | awk '{print $2}'`"
++  # Create temp file
++  _TMPFILE="$(mktemp -p $TMPDIR "$(basename "$0").$(date '+%Y%m%d-%H%M%S').XXXXXX")"
+   # Catch CTRL-C to remove $_TMPFILE
+   trap 'rm -f "$_TMPFILE" 2>/dev/null ; end_die "Interrupted - Removing temporary file $_TMPFILE"' 2
+-  # Create temp file
+-  _TMPMASK=`umask`
+-  umask 0077
+-  touch "$_TMPFILE" 2>/dev/null || end_die "Error creating temporary file $_TMPFILE"
+-  umask "$_TMPMASK"
+ }
+ 
+ # Releases a previously allocated temporary file

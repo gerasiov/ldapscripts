@@ -1,0 +1,33 @@
+Source: ldapscripts
+Section: admin
+Priority: optional
+Maintainer: Alexander GQ Gerasiov <gq@cs.msu.su>
+Homepage: http://ldapscripts.sourceforge.net/
+Standards-Version: 3.8.2
+Build-Depends: cdbs, debhelper (>= 7.0.0)
+
+Package: ldapscripts
+Architecture: all
+Depends: ${misc:Depends}, ldap-utils
+Recommends: sharutils
+Suggests: libpam-ldap
+Description: Add and remove user and groups (stored in a LDAP directory)
+ Ldapscripts are shell scripts that allow management of POSIX accounts (users,
+ groups, machines) in a LDAP directory.   They are similar to smbldap-tools
+ but are written in shellscript, not PERL.
+ .
+ They only require OpenLDAP client commands (ldapadd, ldapdelete, ldapsearch,
+ ldapmodify, ldappasswd) and make administrator's work a lot easier avoiding
+ the need to configure PERL and each library dependency (e.g. Net::LDAP).
+ .
+ These scripts are very simple to configure by not requiring any Samba-related
+ information (SID, profiles, homes, ...) : management of Samba attributes is
+ entirely done by standard commands (net, smbpasswd et pdbedit) used together
+ with the scripts.   Moreover, most of the configuration is guessed from the
+ one of libpam-ldap, and everything should work out from the box for most
+ users.
+ .
+ The scripts may be used independently - within command lines - or
+ automatically by Samba (like smbldap-tools), to handle POSIX information
+ within accounts before adding Samba information.
+

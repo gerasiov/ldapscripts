@@ -1,0 +1,74 @@
+ldapscripts (1.8.0-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #471500, #494101, #502678, #504698, #457251.)
+  * Change Maintainer field (closes: #495221).
+  * Add 01_makefile_destdir.patch, to allow make install into DESTDIR.
+  * Add 02_debian_config.patch to use patched upstream config, but not one from
+    debian/ dir as it was in the previous versions. Original config patched to
+    allow user not to configure ldapscripts themself, but use configuration from
+    libnss-ldap and libldap. debian/runtime.debian is also updated.
+    (Closes: #502673, #375794.)
+  * Add 03_fix_manpages.patch to fix various warnings lintian points to.
+  * Description updated from Ubuntu patches.
+  * Fix debian/control: no more require slapd, libpam-ldap; libnss-ldap and
+    shareutils are now proposed and recommended, policy updated to 3.8.2,
+    Homepage field added.
+  * Add 04_logname_replace.patch: use "id -nu" instead of "logname", because
+    logname wouldn't work if program has no control terminal.
+  * Add 05_mktemp.patch: use mktemp instead of hacks with /dev/urandom.
+  * Add 06_nouuencode_pwgen: pwgen command without uuencode, to remove
+    dependence from shareutils.
+
+ -- Alexander GQ Gerasiov <gq@cs.msu.su>  Wed, 24 Jun 2009 18:00:23 +0400
+
+ldapscripts (1.7.1-2) unstable; urgency=low
+
+  * New upstream release:
+     + Has the fix for CVE-2007-5373 (Closes: #445582).
+     + User can now modify ldiff skeleton (Closes: #405755).
+  * Make upstream support DESTDIR in its makefile.
+
+ -- Pierre Habouzit <madcoder@debian.org>  Sun, 21 Oct 2007 12:27:03 +0200
+
+ldapscripts (1.4-2etch1) stable-security; urgency=low
+
+  [ Steffen Joeris ]
+  * Incorporate changes from upstream security version 1.7.1 and patch
+    etc/runtime (Closes: #445582) for CVE-2007-5373.
+
+ -- Pierre Habouzit <madcoder@debian.org>  Sun, 21 Oct 2007 12:03:31 +0200
+
+ldapscripts (1.4-2) unstable; urgency=low
+
+  * Fix debian magic computation of GIDSTART/UIDSTART.
+    thanks to Philippe Bourdeu d'Aguerre.
+  * Bump standards version to 3.7.2 (no changes required).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Wed, 17 May 2006 11:05:17 +0200
+
+ldapscripts (1.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add missing dependency upon sharutils (closes: #340785).
+  * Updated FSF address.
+
+ -- Pierre Habouzit <madcoder@debian.org>  Sun,  8 Jan 2006 19:13:45 +0100
+
+ldapscripts (1.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Pierre Habouzit <madcoder@debian.org>  Tue, 25 Oct 2005 00:33:31 +0200
+
+ldapscripts (1.2-2) unstable; urgency=low
+
+  * Typo in default config (forgot a ldapscripts/).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Sun, 21 Aug 2005 16:53:31 +0200
+
+ldapscripts (1.2-1) unstable; urgency=low
+
+  * Initial Release (closes: #324296).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Sun, 21 Aug 2005 16:23:01 +0200
+
