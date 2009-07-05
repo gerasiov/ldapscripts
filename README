@@ -1,0 +1,134 @@
+Ldapscripts - README file
+*************************
+
+Description :
+*************
+
+These scripts are designed to be used within the Samba's smb.conf file 
+(or manually) and allow to create POSIX entries for users, groups and 
+machines in an LDAP directory. They are written in sh and need ldap 
+client commands to work correctly (ldapadd, ldapdelete, ldapmodify,
+ldapsearch).
+
+They are designed to be used under GNU/Linux or FreeBSD (any other
+UNIX-like should also work) and require several binaries that should 
+come with your OS (uuencode, getent/pw, date, grep, sed, cut, expr...)
+
+Latest version available on http://contribs.martymac.com
+
+Installing and configuring the ldapscripts :
+********************************************
+
+To install the scripts, just type in :
+# make install
+or, to defined another installation directory :
+# make PREFIX=/target/directory install
+
+Use 'make help' for more options.
+
+All the scripts will be copied (by default) to /usr/local/bin and 
+ldapscripts.conf will be copied to /usr/local/etc/ldapscripts.
+
+Keep in mind that the scripts are installed with quite restrictive rights
+(because you will have to specify you LDAP password as clear-text in the
+configuration file). Just use group rights or ACLs (if they are enabled
+on your system) to make the things work...
+
+Once installed, edit /usr/local/etc/ldapscripts/ldapscripts.conf to 
+configure the ldapscripts.
+
+Then, just type in - e.g. :
+# ldapadduser foo foogroup
+
+See the man pages for more details.
+
+Configuring your OpenLDAP server :
+**********************************
+
+Be sure to include these schemas in your slapd.conf :
+
+- core.schema
+- cosine.schema (for the account objectClass)
+- nis.schema (for the posixAccount objectClass)
+
+Using the ldapscripts with Samba :
+**********************************
+
+To use the ldapscripts with Samba (e.g. for an NT4 -> Samba migration),
+just add the following to your smb.conf file :
+
+# [...]
+add machine script = /usr/local/bin/ldapaddmachine '%u' sambamachines
+add user script = /usr/local/bin/ldapadduser '%u' sambausers
+add group script = /usr/local/bin/ldapaddgroup '%g'
+add user to group script = /usr/local/bin/ldapaddusertogroup '%u' '%g'
+delete user script = /usr/local/bin/ldapdeleteuser '%u'
+delete group script = /usr/local/bin/ldapdeletegroup '%g'
+delete user from group script = /usr/local/bin/ldapdeleteuserfromgroup '%u' '%g'
+set primary group script = /usr/local/bin/ldapsetprimarygroup '%u' '%g'
+rename user script = /usr/local/bin/ldaprenameuser '%uold' '%unew'
+# [...]
+
+and make sure sambamachines and sambausers exist before attempting to 
+do a "net rpc vampire"...
+
+Also be sure to have your machine using the LDAP server as a posix accounts
+source (e.g. nsswitch + nss_ldap on GNU/Linux) since the scripts use
+getent (or pw for FreeBSD) to fetch accounts information.
+
+Files :
+*******
+
+* Various files :
+
+README : this file !
+COPYING : the GPLv2 (or later) license
+CHANGELOG : the changelog file, of course
+VERSION : the current version of the ldapscripts
+TODO : ideas, remaining work
+Makefile : installation Makefile
+
+* Man pages :
+
+man/* : man pages
+
+* Configuration files :
+
+etc/ldapscripts.conf : configuration file
+etc/runtime : runtime file used by the scripts (contains functions, etc...)
+etc/ldapadduser.template.sample : user LDIF template file
+etc/ldapaddgroup.template.sample : group LDIF template file
+etc/ldapaddmachine.template.sample : machine LDIF template file
+
+* Scripts that can be used in Samba's configuration file (smb.conf) :
+
+bin/ldapaddgroup : adds a POSIX group to LDAP
+bin/ldapadduser : adds a POSIX user to LDAP
+bin/ldapdeletegroup : deletes a POSIX group from LDAP
+bin/ldapdeleteuserfromgroup : deletes a memberUid entry from a POSIX group
+bin/ldapsetprimarygroup : sets gidNumber of a POSIX user or machine account
+bin/ldapaddmachine : adds a POSIX machine (user$) to LDAP
+bin/ldapaddusertogroup : add a memberUid entry to a POSIX group
+bin/ldapdeleteuser : deletes a POSIX user from LDAP
+bin/ldaprenameuser : renames a POSIX user account in LDAP
+
+* Additional (useful) scripts not used by Samba (those beginning with a "_") :
+
+bin/_ldapdeletemachine : deletes a POSIX machine account in LDAP
+bin/_ldapinit : initializes the LDAP tree with a minimal tree
+bin/_lsldap : performs a *big* recursive query on the LDAP server from the root dn
+bin/_ldapmodifyuser : modifies a POSIX user account in LDAP interactively
+bin/_ldapmodifymachine : modifies a POSIX machine account in LDAP interactively
+bin/_ldapmodifygroup : modifies a POSIX group account in LDAP interactively
+bin/_ldaprenamemachine : renames a POSIX machine account in LDAP
+bin/_ldaprenamegroup : renames a POSIX group in LDAP
+bin/_ldappasswd : modifies a POSIX user account's password in LDAP
+bin/_ldapfinger : displays a user/machine/group POSIX account's details
+
+Author / Licence :
+******************
+
+These scripts have been written by Ganaël LAPLANCHE (ganael.laplanche@martymac.com)
+and are available within the GPL license (see COPYING for details).
+
+Thanks for using the ldapscripts... Any feedback welcome :)

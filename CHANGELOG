@@ -1,0 +1,114 @@
+2007/10/13 : ldapscripts 1.7.1
+  - Fixes for CVE-2007-5373
+    see http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5373
+    and http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=445582
+
+    1) Up to now, each ldap* command was called with the -w parameter, which allows to
+      specify the bind password on the command line. Unfortunately, this could make the
+      password appear to anybody performing a `ps` during the call. This is now avoided
+      by using the -y parameter and a password file.
+      
+      -> A new BINDPWDFILE option has been added : it specifies the path to the bind
+      password file. This file can be created by something like :
+      'echo -n 'password' > $BINDPWDFILE' and you can now safely remove (or comment) the
+      BINDPWD parameter from your configuration file.
+
+    2) Changing a user password could also reveal the new password on the command line,
+      because of the use of ldappasswd's -s option. This has been fixed by using a temporary
+      file containing the new password (and ldappassword's -T option).
+
+      -> [internals] New mktempf() and reltempf() functions have been added
+
+    [For older versions of OpenLDAP, -y and -T parameters may not be available. It is still
+    possible to use the old BINDPWD parameter. Just uncomment it from the configuration file
+    and comment the BINDPWDFILE parameter (which takes precedence over BINDPWD). The
+    ldapscripts will just behave as previously and use inline -w and -s parameters, warning
+    you this is not secure way of running them.]
+
+    3) A similar problem related to sed expressions has been found : it may also lead to
+      reveal a user's password to `ps` users. This is now fixed by using temporary files
+      containing sed expressions (and sed's -f option).
+
+    4) A new test has been added to check if 'echo' and '[' are built-in or not. If not,
+      you'll be warned that the ldapscripts may not be safe to use (because these commands
+      manipulate passwords when creating temporary files).
+
+      -> [internals] New is_builtin() function
+
+    Note that these flaws depend largely on your kernel configuration : hardened kernels
+    should not be impacted (e.g. if you use security.bsd.see_other_[u|g]ids sysctls on
+    FreeBSD). It may also depend on the version of OpenLDAP client commands you run.
+
+    Thanks a lot to Don and Madcoder for their help !
+
+  - Few fixes to avoid using non-standard 'if ! command's...
+
+2007/09/03 : ldapscripts 1.7
+  - Fixed several typos and bugs
+  - _ldapinit : new options : '-r' and '-s' to create only the root dn ('-r'), or regular OUs ('-s')
+    - [internals] Added the ability to select depth when using _extractldif()
+    - [internals] New is_integer function
+  - _lsldap : new options : '-u', '-g' and '-m', to list only 'u'ser, 'g'roup or 'm'achine entries
+  - New _ldapmodify{user,group,machine} interactive scripts to edit entries
+    - Added a new $TMPDIR configuration variable (necessary for the new scripts)
+    - Added _ldapmodify{user,group,machine}(1) manpages
+  - Now bundled with a brand-new Makefile (old install script no more available)
+
+2007/04/20 : ldapscripts 1.6
+  - Fixed typos
+  - internal _ldapsearch() improved
+  - New _ldapfinger command to display a user/machine/group POSIX account's details
+  - ldapadduser : new option to set the defaults permissions when creating home directories (thanks to Guillaume Rousse)
+  - It is now possible to use a full URI instead of a name for the SERVER directive (thanks to Guillaume Rousse)
+  - It is now possible to use external LDIF templates when creating a user/machine/group (thanks to Guillaume Rousse)
+    See TEMPLATES options in the ldapscripts.conf file and *.template.sample files in the etc/ directory
+  - Now use 'sort -n' instead of 'sort -g' when extracting the last account from the directory (thanks to Rudi van Drunen)
+  - Added a 'description' attribute for group accounts
+
+2007/01/03 : ldapscripts 1.5
+  - Fixed typos (thanks to Mikael Lammentausta)
+  - Small fixes to the install script
+  - ldapadduser : use $_UID instead of $_USER while chown'ing homedir (thanks to Mikael Lammentausta)
+  - ldapadduser : new option to ask for the gecos (thanks to Mikael Lammentausta)
+  - ldapadduser : new option to copy skeleton files to home directories (thanks to Mikael Lammentausta)
+  - ldapadduser : now skip user's home dir creation if it already exists
+  - ldapadduser/ldapaddmachine : modified account description attributes : set to 'User account' or 'Machine account'
+  - ldapadduser/ldapaddgroup/ldapaddmachine : use $_USER and $_GROUP instead of $1 when possible
+  - New _ldappasswd script to modify a user's password (suggested by Mikael Lammentausta)
+
+2006/01/05 : ldapscripts 1.4
+  - More code cleaning !!! Code now clean... (and bug-free ???) - thanks to Madcoder for the help he provided !
+  - Removed dependency to slappasswd !!! Using ldappasswd instead (included in the standard ldap-client commands)
+  - Added new ldaprenameuser command (uses ldapmodrdn included in the standard ldap-client commands)
+      Add this to Samba 3.0.21's configuration file : rename user script = ldaprenameuser '%uold' '%unew'
+      Warning : renaming an entry (user/group/machine) only involves renaming its RDN !
+      This means may have to change manually the account's homedir (user) and modify each group to include the new 
+      rdn (user/machine) as a memberuid.
+  - Also added useful _ldaprenamegroup and _ldaprenamemachine scripts (not used by Samba)
+  - A user/machine is now searched using its uid (no more use of its cn)
+  - Full command now shown in logs
+  - Modified README
+  - New TODO file
+  - Man pages (section 1 for each script, section 5 for a global "ldapscripts" manual)
+
+2005/10/01 : ldapscripts 1.3
+  Compatibility rework / code cleaning - the scripts now work on FreeBSD !
+  - no more calls to "source", use . instead
+  - now using "=" instead of "==" in test
+  - now return 1 instead of -1 when an error occurs
+  - added possibility to specify the getent command, so you can use pw instead (for FreeBSD)
+  - added auto-guess for this command if left blank in conf file
+  - splitted the horrible conf file into a real conf file and a "runtime" file
+
+2005/07/15 : ldapscript 1.2
+  - applied patch from Vincent Esposito to make sure uid/gid/mid found in LDAP is higher than *START ones
+  - small documentation modifications
+
+2005/02/18 : ldapscripts 1.1
+  - added _ldapinit command, to inititalize an LDAP directory with a minimal hierarchy
+  - added support for home directories creation (see ldapscripts.conf)
+  - no more need for backslashes in user home directories and user shell in ldapscripts.conf
+  - added support for initializing (randomized) passwords when adding a user.
+  - Passwords can also be recorded into a log file when performing a massive user creation (see ldapscripts.conf)
+
+2005/02/07 : ldapscripts 1.0
