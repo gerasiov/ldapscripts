@@ -1,3 +1,11 @@
+ldapscripts (1.8.0-3) unstable; urgency=low
+
+  * Fix permissions for ldapscripts.passwd. Also add lintian-overrides
+    for it.
+  * Update my e-mail address.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 06 Jul 2009 00:54:10 +0400
+
 ldapscripts (1.8.0-2) unstable; urgency=low
 
   * runtime.debian: fix warnings appears if libpam-ldap not installed.
