@@ -1,0 +1,2 @@
+ldapscripts: non-standard-file-perm etc/ldapscripts/ldapscripts.passwd 0640 != 0644
+

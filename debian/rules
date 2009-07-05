@@ -1,8 +1,6 @@
 #!/usr/bin/make -f
 include /usr/share/cdbs/1/rules/debhelper.mk
-
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
-#DEB_PATCHDIRS := debian/patches
 
 # documentation
 DEB_INSTALL_DOCS_ALL := README VERSION TODO
@@ -11,6 +9,8 @@ DEB_INSTALL_DOCS_ALL := README VERSION TODO
 DEB_INSTALL_CHANGELOGS_ALL := CHANGELOG
 
 DEB_INSTALL_EXAMPLES_ldapscripts := etc/*.sample
+
+DEB_FIXPERMS_EXCLUDE := etc/ldapscripts/ldapscripts.passwd
 
 install/ldapscripts::
 	$(MAKE) install DESTDIR=debian/ldapscripts PREFIX=/usr ETCDIR=/etc/ldapscripts LIBDIR=/usr/share/ldapscripts MANDIR=/usr/share/man
