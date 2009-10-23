@@ -1,3 +1,14 @@
+ldapscripts (1.9.0-1) unstable; urgency=low
+
+  * Imported Upstream version 1.9.0
+  * watch file added.
+  * Bump standard's version, no changes needed.
+  * Removed: 01_makefile_destdir.patch, 04_logname_replace.patch,
+    06_nouuencode_pwgen.patch and most of
+    debian/patches/03_fix_manpages.patch. Were fixed upstream.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Fri, 23 Oct 2009 14:16:44 +0400
+
 ldapscripts (1.8.0-3) unstable; urgency=low
 
   * Fix permissions for ldapscripts.passwd. Also add lintian-overrides
