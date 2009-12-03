@@ -1,0 +1,3 @@
+02_debian_config.patch
+03_fix_manpages.patch
+05_mktemp.patch
