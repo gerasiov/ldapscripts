@@ -1,0 +1,13 @@
+Index: ldapscripts/lib/runtime
+===================================================================
+--- ldapscripts.orig/lib/runtime	2009-12-03 18:34:43.000000000 +0300
++++ ldapscripts/lib/runtime	2009-12-03 18:37:54.000000000 +0300
+@@ -65,7 +65,7 @@
+ # Input : string to test ($1)
+ # Output : true or false
+ is_builtin () {
+-  type "$1" 2>/dev/null | grep -qi 'built'
++  LANG=C type "$1" 2>/dev/null | grep -qi 'built'
+ }
+ 
+ # Logs a string to $LOGFILE
