@@ -1,3 +1,11 @@
+From: Alexander Gerasiov <gq@debian.org>
+Subject: Fix builtin checking
+ Ldapscripts uses "type" command to discover some builtins and throw security
+ warnings if absent. But this checking works incorrectly in several locales:
+ see #555561.
+ This patch tries to fix this issue in most accurate way I found.
+Forwarded: https://sourceforge.net/tracker/?func=detail&aid=2999925&group_id=156483&atid=799968
+
 Index: ldapscripts/lib/runtime
 ===================================================================
 --- ldapscripts.orig/lib/runtime	2009-12-03 18:34:43.000000000 +0300

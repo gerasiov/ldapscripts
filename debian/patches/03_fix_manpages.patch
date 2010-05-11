@@ -1,3 +1,9 @@
+From: Alexander Gerasiov <gq@debian.org>
+Subject: Fix in manpage to prevent lintian warning.
+ Lintian dislike too long lines in manpage, so I've added non-significal space
+ in filter example.
+Forwarded: not-needed
+
 diff -Nur -x '*.orig' -x '*~' ldapscripts/man/man5/ldapscripts.5 ldapscripts.new/man/man5/ldapscripts.5
 --- ldapscripts/man/man5/ldapscripts.5	2009-10-23 12:56:21.000000000 +0400
 +++ ldapscripts.new/man/man5/ldapscripts.5	2009-10-23 14:12:32.369623267 +0400

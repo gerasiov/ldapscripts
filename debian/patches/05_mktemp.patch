@@ -1,3 +1,10 @@
+From: Alexander Gerasiov <gq@debian.org>
+Subject: Use more secure tempfile creation
+ Upstream uses buggy-way to create temp files. It is vulnerable to several
+ attack technics. But he likes it, because of portablity.
+ As we have mktemp(1) here in Debian, we will use it.
+Forwarded: not-needed
+
 diff -Nur -x '*.orig' -x '*~' ldapscripts/lib/runtime ldapscripts.new/lib/runtime
 --- ldapscripts/lib/runtime	2009-06-24 16:43:53.852731796 +0400
 +++ ldapscripts.new/lib/runtime	2009-06-24 16:44:09.584731540 +0400

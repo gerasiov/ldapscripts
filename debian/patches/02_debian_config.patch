@@ -1,3 +1,13 @@
+From: Alexander Gerasiov <gq@debian.org>
+Subject: Debian-specific changes in ldapscripts.conf and runtime
+ In Debian we try to use some knowlege from other configs (see runtime.debian).
+ So I commented out some values here, and add notes for Debian users.
+ I've alo commented usage of some tools, suggested, but not really needed for
+ common work.
+ .
+ Inclusion of runtime.debian added to runtime file.
+Forwarded: not-needed
+
 diff -Nur -x '*.orig' -x '*~' ldapscripts/etc/ldapscripts.conf ldapscripts.new/etc/ldapscripts.conf
 --- ldapscripts/etc/ldapscripts.conf	2009-06-22 21:06:29.184731006 +0400
 +++ ldapscripts.new/etc/ldapscripts.conf	2009-06-22 21:09:02.412731232 +0400
