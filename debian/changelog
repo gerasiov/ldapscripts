@@ -1,3 +1,12 @@
+ldapscripts (1.9.0-2) unstable; urgency=low
+
+  * Switching to new dpkg v3 (quilt) format.
+  * Fix problem with "not built-it" warnings in some locales. Closes: #555561.
+  * debian/patches: Added DEP-3 annotations.
+  * Bump standard's version, no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Tue, 11 May 2010 15:55:03 +0400
+
 ldapscripts (1.9.0-1) unstable; urgency=low
 
   * Imported Upstream version 1.9.0
