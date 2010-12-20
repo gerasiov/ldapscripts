@@ -12,7 +12,7 @@ Package: ldapscripts
 Architecture: all
 Depends: ${misc:Depends}, ldap-utils
 Recommends: sharutils, pwgen
-Suggests: libpam-ldap
+Suggests: libnss-ldap
 Description: Add and remove user and groups (stored in a LDAP directory)
  Ldapscripts are shell scripts that allow management of POSIX accounts (users,
  groups, machines) in a LDAP directory.   They are similar to smbldap-tools
