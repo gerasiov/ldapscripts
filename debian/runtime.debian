@@ -23,9 +23,9 @@
 
 getfield() {
     local field="$1"
-    local nssconffile='/etc/libnss-ldap.conf'
-    if [ -f "$nssconffile" ];then
-	local value=$(awk "/^\s*$field/ {print \$2}" /etc/libnss-ldap.conf)
+    local conffile='/etc/libnss-ldap.conf'
+    if [ -f "$conffile" ];then
+	local value="$(awk "/^[ \t]*$field/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0}" "$conffile")"
     else
 	local value="$2"
     fi
@@ -39,7 +39,7 @@ getsuffix() {
 }
 
 # LDAP Configuration
-SERVER=$(getfield uri "$(getfield host '')")
+SERVER=$(getfield uri "$(getfield host '')" | awk '{print $1}')
 BINDDN=$(getfield rootbinddn '')
 if [ -f /etc/libnss-ldap.secret ];then
 	BINDPWDFILE=/etc/libnss-ldap.secret
