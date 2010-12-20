@@ -8,9 +8,10 @@ Subject: Debian-specific changes in ldapscripts.conf and runtime
  Inclusion of runtime.debian added to runtime file.
 Forwarded: not-needed
 
-diff -Nur -x '*.orig' -x '*~' ldapscripts/etc/ldapscripts.conf ldapscripts.new/etc/ldapscripts.conf
---- ldapscripts/etc/ldapscripts.conf	2009-06-22 21:06:29.184731006 +0400
-+++ ldapscripts.new/etc/ldapscripts.conf	2009-06-22 21:09:02.412731232 +0400
+Index: ldapscripts/etc/ldapscripts.conf
+===================================================================
+--- ldapscripts.orig/etc/ldapscripts.conf	2010-12-20 23:15:23.000000000 +0300
++++ ldapscripts/etc/ldapscripts.conf	2010-12-20 23:17:24.000000000 +0300
 @@ -15,22 +15,32 @@
  #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  #  USA.
@@ -51,7 +52,7 @@ diff -Nur -x '*.orig' -x '*~' ldapscripts/etc/ldapscripts.conf ldapscripts.new/e
  
  # Start with these IDs *if no entry found in LDAP*
  GIDSTART="10000" # Group ID
-@@ -38,11 +48,12 @@
+@@ -38,22 +48,24 @@
  MIDSTART="20000" # Machine ID
  
  # User properties
@@ -68,7 +69,20 @@ diff -Nur -x '*.orig' -x '*~' ldapscripts/etc/ldapscripts.conf ldapscripts.new/e
  
  # User passwords generation
  # Command-line used to generate a password for added users (you may use %u for username here)
-@@ -82,12 +93,12 @@
+ # WARNING !!!! This is evaluated, everything specified here will be run !
+ # Special value "<ask>" will ask for a password interactively
+-PASSWORDGEN="cat /dev/random | LC_ALL=C tr -dc 'a-zA-Z0-9' | head -c8"
++#PASSWORDGEN="cat /dev/random | LC_ALL=C tr -dc 'a-zA-Z0-9' | head -c8"
+ #PASSWORDGEN="head -c8 /dev/random | uuencode -m - | sed -n '2s|=*$||;2p' | sed -e 's|+||g' -e 's|/||g'"
+ #PASSWORDGEN="pwgen"
+ #PASSWORDGEN="echo changeme"
+ #PASSWORDGEN="echo %u"
+ #PASSWORDGEN="<ask>"
++PASSWORDGEN="pwgen"
+ 
+ # User passwords recording
+ # you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS
+@@ -84,12 +96,12 @@
  
  # Character set conversion : $ICONVCHAR <-> UTF-8
  # Comment ICONVBIN to disable UTF-8 conversion
@@ -83,9 +97,10 @@ diff -Nur -x '*.orig' -x '*~' ldapscripts/etc/ldapscripts.conf ldapscripts.new/e
  
  # Getent command to use - choose the ones used
  # on your system. Leave blank or comment for auto-guess.
-diff -Nur -x '*.orig' -x '*~' ldapscripts/lib/runtime ldapscripts.new/lib/runtime
---- ldapscripts/lib/runtime	2009-06-22 21:06:29.184731006 +0400
-+++ ldapscripts.new/lib/runtime	2009-06-22 21:06:30.608731197 +0400
+Index: ldapscripts/lib/runtime
+===================================================================
+--- ldapscripts.orig/lib/runtime	2010-12-20 23:15:34.000000000 +0300
++++ ldapscripts/lib/runtime	2010-12-20 23:16:23.000000000 +0300
 @@ -595,6 +595,9 @@
  
  ### Source configuration file

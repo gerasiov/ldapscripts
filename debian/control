@@ -11,7 +11,7 @@ Vcs-Browser: http://git.gq.net.ru/?p=ldapscripts.git
 Package: ldapscripts
 Architecture: all
 Depends: ${misc:Depends}, ldap-utils
-Recommends: sharutils
+Recommends: sharutils, pwgen
 Suggests: libpam-ldap
 Description: Add and remove user and groups (stored in a LDAP directory)
  Ldapscripts are shell scripts that allow management of POSIX accounts (users,
