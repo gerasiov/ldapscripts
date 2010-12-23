@@ -1,3 +1,12 @@
+ldapscripts (1.9.0-3) unstable; urgency=low
+
+  * Use pwgen as password generator by default. Closes: #592369.
+  * runtime.debian: Fix nss-ldap.conf parsing. Closes: #601942.
+  * debian/control: Suggests libnss-ldap, not libpam-ldap.
+  * Bump standard's version, no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Thu, 23 Dec 2010 15:35:18 +0300
+
 ldapscripts (1.9.0-2) unstable; urgency=low
 
   * Switching to new dpkg v3 (quilt) format.
