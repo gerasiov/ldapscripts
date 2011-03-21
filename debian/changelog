@@ -1,3 +1,15 @@
+ldapscripts (1.10.0-1) unstable; urgency=low
+
+  * debian/control: Standards-version updated, no changes needed.
+  * Imported Upstream version 1.10.0
+  * debian/patches: Patches refreshed.
+  * Added 07_fix_free_uid_search.patch. Thanks to Slavko
+    <linux@slavino.sk> (Closes: #609148)
+  * debian/control: DEB_FIXPERMS_EXCLUDE replaced with
+    DEB_FIXPERMS_EXCLUDE_ALL.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 21 Mar 2011 17:45:15 +0300
+
 ldapscripts (1.9.0-3) unstable; urgency=low
 
   * Use pwgen as password generator by default. Closes: #592369.
