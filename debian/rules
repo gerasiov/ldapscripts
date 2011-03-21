@@ -9,7 +9,7 @@ DEB_INSTALL_CHANGELOGS_ALL := CHANGELOG
 
 DEB_INSTALL_EXAMPLES_ldapscripts := etc/*.sample
 
-DEB_FIXPERMS_EXCLUDE := etc/ldapscripts/ldapscripts.passwd
+DEB_FIXPERMS_EXCLUDE_ALL := etc/ldapscripts/ldapscripts.passwd
 
 install/ldapscripts::
 	$(MAKE) install DESTDIR=debian/ldapscripts PREFIX=/usr ETCDIR=/etc/ldapscripts LIBDIR=/usr/share/ldapscripts MANDIR=/usr/share/man
