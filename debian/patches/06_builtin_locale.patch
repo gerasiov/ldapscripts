@@ -8,9 +8,9 @@ Forwarded: https://sourceforge.net/tracker/?func=detail&aid=2999925&group_id=156
 
 Index: ldapscripts/lib/runtime
 ===================================================================
---- ldapscripts.orig/lib/runtime	2009-12-03 18:34:43.000000000 +0300
-+++ ldapscripts/lib/runtime	2009-12-03 18:37:54.000000000 +0300
-@@ -65,7 +65,7 @@
+--- ldapscripts.orig/lib/runtime	2011-03-21 16:40:46.000000000 +0300
++++ ldapscripts/lib/runtime	2011-03-21 16:40:46.000000000 +0300
+@@ -73,7 +73,7 @@
  # Input : string to test ($1)
  # Output : true or false
  is_builtin () {

@@ -4,9 +4,10 @@ Subject: Fix in manpage to prevent lintian warning.
  in filter example.
 Forwarded: not-needed
 
-diff -Nur -x '*.orig' -x '*~' ldapscripts/man/man5/ldapscripts.5 ldapscripts.new/man/man5/ldapscripts.5
---- ldapscripts/man/man5/ldapscripts.5	2009-10-23 12:56:21.000000000 +0400
-+++ ldapscripts.new/man/man5/ldapscripts.5	2009-10-23 14:12:32.369623267 +0400
+Index: ldapscripts/man/man5/ldapscripts.5
+===================================================================
+--- ldapscripts.orig/man/man5/ldapscripts.5	2011-03-21 16:32:22.000000000 +0300
++++ ldapscripts/man/man5/ldapscripts.5	2011-03-21 16:40:46.000000000 +0300
 @@ -73,4 +73,4 @@
  .B "Additional information: value does not conform to assertion syntax".
  Setting slapd's debug level to 32 shows additional details :

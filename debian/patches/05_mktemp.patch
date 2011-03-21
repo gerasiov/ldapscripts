@@ -5,10 +5,11 @@ Subject: Use more secure tempfile creation
  As we have mktemp(1) here in Debian, we will use it.
 Forwarded: not-needed
 
-diff -Nur -x '*.orig' -x '*~' ldapscripts/lib/runtime ldapscripts.new/lib/runtime
---- ldapscripts/lib/runtime	2009-06-24 16:43:53.852731796 +0400
-+++ ldapscripts.new/lib/runtime	2009-06-24 16:44:09.584731540 +0400
-@@ -126,15 +126,10 @@
+Index: ldapscripts/lib/runtime
+===================================================================
+--- ldapscripts.orig/lib/runtime	2011-03-21 16:40:18.000000000 +0300
++++ ldapscripts/lib/runtime	2011-03-21 16:40:55.000000000 +0300
+@@ -134,15 +134,10 @@
  mktempf () {
    # Avoid creating two temporary files (must have been released before)
    [ -n "$_TMPFILE" ] && end_die "Error allocating temporary file $_TMPFILE"
