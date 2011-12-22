@@ -16,7 +16,7 @@ Suggests: libnss-ldap
 Description: Add and remove user and groups (stored in a LDAP directory)
  Ldapscripts are shell scripts that allow management of POSIX accounts (users,
  groups, machines) in a LDAP directory.   They are similar to smbldap-tools
- but are written in shellscript, not PERL.
+ but are written in shellscript, not Perl.
  .
  They only require OpenLDAP client commands (ldapadd, ldapdelete, ldapsearch,
  ldapmodify, ldappasswd) and make administrator's work a lot easier avoiding
