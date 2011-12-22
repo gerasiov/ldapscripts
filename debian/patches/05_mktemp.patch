@@ -7,20 +7,20 @@ Forwarded: not-needed
 
 Index: ldapscripts/lib/runtime
 ===================================================================
---- ldapscripts.orig/lib/runtime	2011-03-21 16:40:18.000000000 +0300
-+++ ldapscripts/lib/runtime	2011-03-21 16:40:55.000000000 +0300
+--- ldapscripts.orig/lib/runtime	2011-12-22 12:58:14.000000000 +0400
++++ ldapscripts/lib/runtime	2011-12-22 13:03:26.000000000 +0400
 @@ -134,15 +134,10 @@
  mktempf () {
    # Avoid creating two temporary files (must have been released before)
    [ -n "$_TMPFILE" ] && end_die "Error allocating temporary file $_TMPFILE"
 -  # Name temp file
--  _TMPFILE="$TMPDIR/`basename $0`.`date '+%Y%m%d-%H%M%S'`.$$.`head -c4 /dev/random | od -t u4 | head -n 1 | awk '{print $2}'`"
+-  _TMPFILE="$TMPDIR/$(basename $0).$(date '+%Y%m%d-%H%M%S').$$.$(head -c4 /dev/random | od -t u4 | head -n 1 | awk '{print $2}')"
 +  # Create temp file
 +  _TMPFILE="$(mktemp -p $TMPDIR "$(basename "$0").$(date '+%Y%m%d-%H%M%S').XXXXXX")"
    # Catch CTRL-C to remove $_TMPFILE
    trap 'rm -f "$_TMPFILE" 2>/dev/null ; end_die "Interrupted - Removing temporary file $_TMPFILE"' 2
 -  # Create temp file
--  _TMPMASK=`umask`
+-  _TMPMASK=$(umask)
 -  umask 0077
 -  touch "$_TMPFILE" 2>/dev/null || end_die "Error creating temporary file $_TMPFILE"
 -  umask "$_TMPMASK"
