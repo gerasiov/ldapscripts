@@ -22,10 +22,10 @@ DESTDIR =
 PREFIX = /usr/local
 
 # Identity
-SHELL=/bin/sh
+SHELL= /bin/sh
 NAME = ldapscripts
 #SUFFIX = -devel
-VERSION = 1.10.0
+VERSION = 2.0.1
 
 # Default installation paths
 SBINDIR = $(PREFIX)/sbin
