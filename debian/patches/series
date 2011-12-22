@@ -2,4 +2,3 @@
 03_fix_manpages.patch
 05_mktemp.patch
 06_builtin_locale.patch
-07_fix_free_uid_search.patch
