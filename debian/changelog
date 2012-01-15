@@ -1,3 +1,13 @@
+ldapscripts (2.0.1-1) unstable; urgency=low
+
+  * Imported Upstream version 2.0.1
+  * Updated debian/patches/05_mktemp.patch.
+  * Removed debian/patches/07_fix_free_uid_search.patch (fixed upstream).
+  * debian/control: Replace PERL wirh Perl (Closes: #620473).
+  * debian/control: Standards-version updated, no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 16 Jan 2012 02:21:44 +0400
+
 ldapscripts (1.10.0-1) unstable; urgency=low
 
   * debian/control: Standards-version updated, no changes needed.
