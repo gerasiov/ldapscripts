@@ -1,8 +1,8 @@
 ### This file predefine some ldapscripts variables for Debian boxes.
 #
-#  Copyright (c) 2005 Ganaël LAPLANCHE - Linagora
+#  Copyright (c) 2005 GanaÃ«l LAPLANCHE - Linagora
 #  Copyright (c) 2005-2007 Pierre Habouzit
-#  Copyright (c) 2009 Alexander GQ Gerasiov
+#  Copyright (c) 2009-2012 Alexander GQ Gerasiov
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -19,38 +19,42 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 #  USA.
 
-##### Beginning of ldapscripts configuration #####
+conffile='/etc/nslcd.conf'
 
 getfield() {
     local field="$1"
-    local conffile='/etc/libnss-ldap.conf'
+    local value
     if [ -f "$conffile" ];then
-	local value="$(awk "/^[ \t]*$field/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0}" "$conffile")"
+	value="$(awk "/^[ \t]*$field/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0; exit}" "$conffile")"
     else
-	local value="$2"
+	value="$2"
     fi
     echo ${value:-$2}
 }
 
-getsuffix() {
-    field="$1"
-    value="$(getfield "$1" | sed -e "s/,.*$//")"
+getbase() {
+    local field="base"
+    local value
+    if [ ! -f "$conffile" ];then
+	value="$2"
+    else
+	if [ $# -eq 0 ];then
+	    value="$(awk "/^[ \t]*$field[ \t]+[a-zA-Z0-9]+=/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0; exit}" "$conffile")"
+	else
+	    local map="$1"
+	    value="$(awk "/^[ \t]*$field[ \t]+$map/ {sub(/^[ \t]*$field[ \t]+$map[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); sub(/,$SUFFIX\$/, \"\"); print \$0; exit}" "$conffile")"
+	fi
+    fi
     echo ${value:-$2}
 }
 
 # LDAP Configuration
 SERVER=$(getfield uri "$(getfield host '')" | awk '{print $1}')
-BINDDN=$(getfield rootbinddn '')
-if [ -f /etc/libnss-ldap.secret ];then
-	BINDPWDFILE=/etc/libnss-ldap.secret
-elif [ -f /etc/ldap.secret ];then
-	BINDPWDFILE=/etc/ldap.secret
-fi
 
-SUFFIX=`getfield base`
-GSUFFIX=`getsuffix nss_base_group   'ou=Group'`
-USUFFIX=`getsuffix nss_base_passwd  'ou=People'`
-MSUFFIX=`getsuffix nss_base_hosts   'ou=Hosts'`
+SUFFIX=$(getbase)
+USUFFIX=$(getbase passwd 'ou=People')
+GSUFFIX=$(getbase group 'ou=Groups')
+MSUFFIX=$(getbase hosts 'ou=Hosts')
 
 # User properties
 [ -f /etc/adduser.conf ] && . /etc/adduser.conf
@@ -60,4 +64,4 @@ HOMESKEL=${SKEL:-"/etc/skel"}
 HOMEPERMS=${DIR_MODE:-"0755"}
 
 TMPDIR="/tmp"
-##### End of configuration #####
+

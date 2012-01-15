@@ -10,21 +10,21 @@ Forwarded: not-needed
 
 Index: ldapscripts/etc/ldapscripts.conf
 ===================================================================
---- ldapscripts.orig/etc/ldapscripts.conf	2011-03-21 16:39:19.000000000 +0300
-+++ ldapscripts/etc/ldapscripts.conf	2011-03-21 16:40:30.000000000 +0300
+--- ldapscripts.orig/etc/ldapscripts.conf	2012-08-27 02:44:26.000000000 +0400
++++ ldapscripts/etc/ldapscripts.conf	2012-08-27 03:05:12.000000000 +0400
 @@ -16,14 +16,22 @@
  #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  #  USA.
  
 +# Note for Debian users:
-+# On Debian system ldapscripts will try to parse and use some system config.
++# On Debian system ldapscripts will try to parse and use nslcd config.
 +# Look on commented variables and description lines started with DEBIAN.
 +# But you could override it's values here.
 +
 +
  # LDAP server
 -SERVER="ldap://localhost"
-+# DEBIAN: values from /etc/pam_ldap.conf are used.
++# DEBIAN: value from /etc/nslcd.conf (uri) is used.
 +#SERVER="ldap://localhost"
  
  # Suffixes
@@ -32,7 +32,7 @@ Index: ldapscripts/etc/ldapscripts.conf
 -GSUFFIX="ou=Groups"        # Groups ou (just under $SUFFIX)
 -USUFFIX="ou=Users"         # Users ou (just under $SUFFIX)
 -MSUFFIX="ou=Machines"      # Machines ou (just under $SUFFIX)
-+# DEBIAN: values from /etc/pam_ldap.conf are used.
++# DEBIAN: values from /etc/nslcd.conf (base maps) are used.
 +#SUFFIX="dc=example,dc=com" # Global suffix
 +#GSUFFIX="ou=Groups"        # Groups ou (just under $SUFFIX)
 +#USUFFIX="ou=Users"         # Users ou (just under $SUFFIX)
@@ -40,24 +40,7 @@ Index: ldapscripts/etc/ldapscripts.conf
  
  # Authentication type
  # If empty, use simple authentication
-@@ -32,12 +40,14 @@
- #SASLAUTH="GSSAPI"
- 
- # Simple authentication parameters
-+# DEBIAN: values from /etc/pam_ldap.conf are used.
- # The following BIND* parameters are ignored if SASLAUTH is set
--BINDDN="cn=Manager,dc=example,dc=com"
-+#BINDDN="cn=Manager,dc=example,dc=com"
- # The following file contains the raw password of the BINDDN
- # Create it with something like : echo -n 'secret' > $BINDPWDFILE
- # WARNING !!!! Be careful not to make this file world-readable
--BINDPWDFILE="/etc/ldapscripts/ldapscripts.passwd"
-+# DEBIAN: /etc/pam_ldap.secret or /etc/ldap.secret are used.
-+#BINDPWDFILE="/etc/ldapscripts/ldapscripts.passwd"
- # For older versions of OpenLDAP, it is still possible to use
- # unsecure command-line passwords by defining the following option
- # AND commenting the previous one (BINDPWDFILE takes precedence)
-@@ -60,11 +70,12 @@
+@@ -60,11 +68,12 @@
  #GDUMMYMEMBER="uid=dummy,$USUFFIX,$SUFFIX"
  
  # User properties
@@ -74,7 +57,7 @@ Index: ldapscripts/etc/ldapscripts.conf
  
  # User passwords generation
  # Command-line used to generate a password for added users.
-@@ -72,11 +83,12 @@
+@@ -72,11 +81,12 @@
  # WARNING    !!!! This is evaluated, everything specified here will be run !
  # WARNING(2) !!!! Some systems (Linux) use a blocking /dev/random (waiting for enough entropy).
  #                 In this case, consider using /dev/urandom instead.
@@ -88,7 +71,16 @@ Index: ldapscripts/etc/ldapscripts.conf
  
  # User passwords recording
  # you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS
-@@ -107,12 +119,12 @@
+@@ -90,7 +100,7 @@
+ LOGFILE="/var/log/ldapscripts.log"
+ 
+ # Temporary folder
+-TMPDIR="/tmp"
++#TMPDIR="/tmp"
+ 
+ # Various binaries used within the scripts
+ # Warning : they also use uuencode, date, grep, sed, cut, which... 
+@@ -107,12 +117,12 @@
  
  # Character set conversion : $ICONVCHAR <-> UTF-8
  # Comment ICONVBIN to disable UTF-8 conversion
@@ -105,9 +97,9 @@ Index: ldapscripts/etc/ldapscripts.conf
  # on your system. Leave blank or comment for auto-guess.
 Index: ldapscripts/lib/runtime
 ===================================================================
---- ldapscripts.orig/lib/runtime	2011-03-21 16:39:19.000000000 +0300
-+++ ldapscripts/lib/runtime	2011-03-21 16:41:01.000000000 +0300
-@@ -649,6 +649,9 @@
+--- ldapscripts.orig/lib/runtime	2012-08-27 02:44:26.000000000 +0400
++++ ldapscripts/lib/runtime	2012-08-27 03:01:53.000000000 +0400
+@@ -680,6 +680,9 @@
  
  ### Source configuration file
  
