@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Alexander GQ Gerasiov <gq@debian.org>
 Homepage: http://ldapscripts.sourceforge.net/
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 Build-Depends: cdbs, debhelper (>= 7.0.0)
 Vcs-Git: git://git.gq.net.ru/ldapscripts.git
 Vcs-Browser: http://git.gq.net.ru/?p=ldapscripts.git
