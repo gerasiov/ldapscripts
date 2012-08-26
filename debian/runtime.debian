@@ -65,3 +65,4 @@ HOMEPERMS=${DIR_MODE:-"0755"}
 
 TMPDIR="/tmp"
 
+GCLASS="posixGroup"
