@@ -20,7 +20,7 @@ Description: Add and remove user and groups (stored in a LDAP directory)
  .
  They only require OpenLDAP client commands (ldapadd, ldapdelete, ldapsearch,
  ldapmodify, ldappasswd) and make administrator's work a lot easier avoiding
- the need to configure PERL and each library dependency (e.g. Net::LDAP).
+ the need to configure Perl and each library dependency (e.g. Net::LDAP).
  .
  These scripts are very simple to configure by not requiring any Samba-related
  information (SID, profiles, homes, ...) : management of Samba attributes is
