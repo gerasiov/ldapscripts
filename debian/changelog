@@ -1,3 +1,13 @@
+ldapscripts (2.0.1-2) unstable; urgency=low
+
+  * Depend on nslcd instead of libnss-ldap, and us it's config.
+      (Closes: #610971, #681266.)
+  * debian/runtime.debian: Specify default value for GCLASS. (Closes: #671613)
+  * debian/control: Fix 'Perl' writing. (Closes: #656172.)
+  * debian/control: Standards-version updated, no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 27 Aug 2012 04:38:33 +0400
+
 ldapscripts (2.0.1-1) unstable; urgency=low
 
   * Imported Upstream version 2.0.1
