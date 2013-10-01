@@ -1,3 +1,19 @@
+ldapscripts (2.0.5-1) unstable; urgency=low
+
+  * Imported Upstream version 2.0.5
+  * Removed 06_builtin_locale.patch: fixed upstream.
+  * debian/control: Update description. (Closes: #686140)
+  * 02_debian_config.patch refreshed.
+  * New patch 06_fix_logname.patch fixes logname invocation issues.
+    (Closes: #719295)
+  * debian/runtime.debian: Fix awk invocation. Should fix (LP: #1225440).
+  * New patch 07_fix_log_perm.patch fixes permissions of log file.
+  * New patch 08_fix_log_entry.patch fixes log entry when runtime is sourced
+    from file with whitespaces.
+  * debian/control: Bump Standard's version: no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Tue, 01 Oct 2013 22:21:54 +0400
+
 ldapscripts (2.0.1-2) unstable; urgency=low
 
   * Depend on nslcd instead of libnss-ldap, and us it's config.
