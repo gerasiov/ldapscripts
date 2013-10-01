@@ -25,7 +25,7 @@ getfield() {
     local field="$1"
     local value
     if [ -f "$conffile" ];then
-	value="$(awk "/^[ \t]*$field/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0; exit}" "$conffile")"
+	value=$(awk "/^[ \t]*$field/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0; exit}" "$conffile")
     else
 	value="$2"
     fi
@@ -39,10 +39,10 @@ getbase() {
 	value="$2"
     else
 	if [ $# -eq 0 ];then
-	    value="$(awk "/^[ \t]*$field[ \t]+[a-zA-Z0-9]+=/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0; exit}" "$conffile")"
+	    value=$(awk "/^[ \t]*$field[ \t]+[a-zA-Z0-9]+=/ {sub(/^[ \t]*$field[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); print \$0; exit}" "$conffile")
 	else
 	    local map="$1"
-	    value="$(awk "/^[ \t]*$field[ \t]+$map/ {sub(/^[ \t]*$field[ \t]+$map[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); sub(/,$SUFFIX\$/, \"\"); print \$0; exit}" "$conffile")"
+	    value=$(awk "/^[ \t]*$field[ \t]+$map/ {sub(/^[ \t]*$field[ \t]+$map[ \t]*/,\"\"); sub(/[ \t]*(#.*)?\$/, \"\"); sub(/,$SUFFIX\$/, \"\"); print \$0; exit}" "$conffile")
 	fi
     fi
     echo ${value:-$2}
