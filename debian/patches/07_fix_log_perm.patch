@@ -1,0 +1,24 @@
+Index: ldapscripts/lib/runtime
+===================================================================
+--- ldapscripts.orig/lib/runtime	2013-10-01 21:51:55.000000000 +0400
++++ ldapscripts/lib/runtime	2013-10-01 22:01:43.000000000 +0400
+@@ -86,11 +86,19 @@
+     then
+       if [ ! -w "$LOGFILE" ]
+       then
++        _UMASK=$(umask)
++        umask 077
+         touch "$LOGFILE" 2>/dev/null
+         if [ $? -ne 0 ]
+         then
+           echo "Unable to create $LOGFILE, exiting..." && exit 1
+         fi
++      umask $_UMASK
++      else
++        if [ $(($(stat -c %a "$LOGFILE")%10)) -ne 0 ]
++        then
++          echo "Unsafe permissions on $LOGFILE, exiting..." && exit 1
++        fi
+       fi
+       echo "$1" >> "$LOGFILE"
+     fi
