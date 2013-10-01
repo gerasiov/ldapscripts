@@ -1,0 +1,10 @@
+Index: ldapscripts/lib/runtime
+===================================================================
+--- ldapscripts.orig/lib/runtime	2013-10-01 21:14:17.000000000 +0400
++++ ldapscripts/lib/runtime	2013-10-01 21:15:02.000000000 +0400
+@@ -805,4 +805,4 @@
+ fi
+ 
+ # Record command call into logfile
+-log_only "$(date '+%b %d %H:%M:%S') $(uname -n | sed 's|\..*$||') ldapscripts: $(basename $0)($USER): $0 $*"
++log_only "$(date '+%b %d %H:%M:%S') $(uname -n | sed 's|\..*$||') ldapscripts: $(basename "$0")($USER): $0 $*"

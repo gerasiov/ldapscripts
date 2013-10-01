@@ -3,3 +3,4 @@
 05_mktemp.patch
 06_fix_logname.patch
 07_fix_log_perm.patch
+08_fix_log_entry.patch
