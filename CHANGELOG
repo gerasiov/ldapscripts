@@ -1,3 +1,20 @@
+2013/09/10 : ldapscripts 2.0.5
+  - Add LDAP client common additional options
+    Submitted by: Michael Bejer-Andersen <mband@mmmi.sdu.dk>
+
+2013/07/23 : ldapscripts 2.0.4
+  - ldapaddusertogroup and ldapdeleteuserfromgroup are now able to work on
+    groups located in sub-OUs of $GSUFFIX
+
+2013/07/17 : ldapscripts 2.0.3
+  - Fix Debian bug #555561
+    See : http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555561
+
+2013/04/18 : ldapscripts 2.0.2
+  - Fix long lines wrapping bug
+    Reported by: muzzol <muzzol@muzzol.com>
+  - Update Copyright dates
+
 2011/04/19 : ldapscripts 2.0.1
   - Fix man pages installation
     (broken by wrong `` -> $() substitutions in Makefile)

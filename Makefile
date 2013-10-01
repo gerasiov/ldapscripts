@@ -1,6 +1,6 @@
 #  Makefile for the lapscripts
 
-#  Copyright (C) 2007-2011 Ganaël LAPLANCHE
+#  Copyright (C) 2007-2013 Ganaël LAPLANCHE
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ PREFIX = /usr/local
 SHELL= /bin/sh
 NAME = ldapscripts
 #SUFFIX = -devel
-VERSION = 2.0.1
+VERSION = 2.0.5
 
 # Default installation paths
 SBINDIR = $(PREFIX)/sbin
@@ -196,6 +196,6 @@ mrproper:	clean
 package:	clean
 	@echo -n 'Creating source tarball /tmp/$(NAME)-$(VERSION)$(SUFFIX).tgz... '
 	@echo '$(VERSION)$(SUFFIX)' > VERSION
-	@(cd .. && tar czf /tmp/$(NAME)-$(VERSION)$(SUFFIX).tgz $(NAME)-$(VERSION))
+	@(cd .. && tar c --exclude '.git' -zf /tmp/$(NAME)-$(VERSION)$(SUFFIX).tgz $(NAME)-$(VERSION))
 	@echo 'ok.'
 
