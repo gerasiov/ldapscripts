@@ -1,7 +1,7 @@
 #  runtime : this file is used by the ldapscripts, it sould not be used independently
 
 #  Copyright (C) 2005 Ganaël LAPLANCHE - Linagora
-#  Copyright (C) 2006-2013 Ganaël LAPLANCHE
+#  Copyright (C) 2006-2015 Ganaël LAPLANCHE
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -79,21 +79,50 @@ is_builtin () {
 # Logs a string to $LOGFILE
 # Input : string to log ($1)
 # Output : nothing
-log_only () {
+log_to_file () {
   if [ -n "$1" ]
   then
     if [ -n "$LOGFILE" ]
     then
       if [ ! -w "$LOGFILE" ]
       then
+        _TMPMASK=$(umask)
+        umask 0077
         touch "$LOGFILE" 2>/dev/null
         if [ $? -ne 0 ]
         then
           echo "Unable to create $LOGFILE, exiting..." && exit 1
         fi
+        umask "$_TMPMASK"
       fi
       echo "$1" >> "$LOGFILE"
     fi
+  fi
+}
+
+# Logs a string to syslog
+# Input : string to log ($1)
+# Output : nothing
+log_to_syslog () {
+  if [ -n "$1" ]
+  then
+    SYSLOGFACILITY=${SYSLOGFACILITY:-"local4"}
+    SYSLOGLEVEL=${SYSLOGLEVEL:-"info"}
+    logger -it "$(basename $0)" -p "$SYSLOGFACILITY"."$SYSLOGLEVEL" "$1"
+  fi
+}
+
+# Logs a string to $LOGFILE and/or to syslog
+# Input : string to log ($1)
+# Output : nothing
+log_only () {
+  if [ "$LOGTOFILE" = "yes" ]
+  then
+    log_to_file "$1"
+  fi
+  if [ "$LOGTOSYSLOG" = "yes" ]
+  then
+    log_to_syslog "$1"
   fi
 }
 
@@ -277,7 +306,7 @@ _extractldif () {
     warn_log "Warning : invalid depth supplied to _extractldif(), using default (2)..."
     _EXTRACTDEPTH='2'
   fi
-  grep "^#\{$_EXTRACTDEPTH\}[^#]*$" "$0" | sed 's|^#*||' 2>>"$LOGFILE"
+  grep -a "^#\{$_EXTRACTDEPTH\}[^#]*$" "$0" | sed 's|^#*||' 2>>"$LOGFILE"
 }
 
 # Filters LDIF information
@@ -663,11 +692,7 @@ _changepassword () {
       echo "$2 : $1" >> "$PASSWORDFILE"
     fi
 
-    if [ -n "$SASLAUTH" ]
-    then
-      # XXX Is there a reason to allow changing a userPassword attribute here ?
-      end_die "Please, change password in $SASLAUTH database"
-    elif [ -n "$BINDPWDFILE" ]
+    if [ -n "$SASLAUTH" ] || [ -n "$BINDPWDFILE" ]
     then
       ## Change password in a secure way
       # Allocate and create temp file
@@ -675,7 +700,12 @@ _changepassword () {
       # Generate password file
       echo -n "$1" > "$_TMPFILE" || end_die "Error writing to temporary file $_TMPFILE"
       # Change password
-      $LDAPPASSWDBIN $LDAPBINOPTS -y "$BINDPWDFILE" -D "$BINDDN" -xH "$SERVER" -T "$_TMPFILE" "$2" 2>>"$LOGFILE" 1>/dev/null
+      if [ -n "$SASLAUTH" ]
+      then
+        $LDAPPASSWDBIN $LDAPBINOPTS -Y "$SASLAUTH" -H "$SERVER" -T "$_TMPFILE" "$2" 2>>"$LOGFILE" 1>/dev/null
+      else # [ -n "$BINDPWDFILE" ]
+        $LDAPPASSWDBIN $LDAPBINOPTS -y "$BINDPWDFILE" -D "$BINDDN" -xH "$SERVER" -T "$_TMPFILE" "$2" 2>>"$LOGFILE" 1>/dev/null
+      fi
       _RESULT=$?
       # Release temp file
       reltempf
@@ -717,7 +747,7 @@ fi
 
 # Set USER variable to the user's login name (do not trust current $USER value)
 USER=$(logname 2>/dev/null)
-[ -z "$USER" ] && end_die 'Could not guess current user'
+[ -n "$USER" ] || USER=$(id -un 2>/dev/null)
 
 # Check for bindpwd file if necessary
 if [ -z "$SASLAUTH" ]
@@ -803,5 +833,12 @@ then
   esac
 fi
 
-# Record command call into logfile
-log_only "$(date '+%b %d %H:%M:%S') $(uname -n | sed 's|\..*$||') ldapscripts: $(basename $0)($USER): $0 $*"
+# Log command
+if [ "$LOGTOFILE" = "yes" ]
+then
+  log_to_file "$(date '+%b %d %H:%M:%S') $(uname -n | sed 's|\..*$||') ldapscripts: $(basename "$0")($USER): $0 $*"
+fi
+if [ "$LOGTOSYSLOG" = "yes" ]
+then
+  log_to_syslog "($USER): $0 $*"
+fi
