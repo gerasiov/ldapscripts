@@ -1,20 +1,21 @@
 #!/usr/bin/make -f
-include /usr/share/cdbs/1/rules/debhelper.mk
 
-# documentation
-DEB_INSTALL_DOCS_ALL := README VERSION TODO
+%:
+	dh $@
 
-# changelogs
-DEB_INSTALL_CHANGELOGS_ALL := CHANGELOG
-
-DEB_INSTALL_EXAMPLES_ldapscripts := etc/*.sample
-
-DEB_FIXPERMS_EXCLUDE_ALL := etc/ldapscripts/ldapscripts.passwd
-
-install/ldapscripts::
+override_dh_auto_install:
 	$(MAKE) install DESTDIR=debian/ldapscripts PREFIX=/usr ETCDIR=/etc/ldapscripts LIBDIR=/usr/share/ldapscripts MANDIR=/usr/share/man
 	cp debian/runtime.debian debian/ldapscripts/usr/share/ldapscripts
 	rm debian/ldapscripts/etc/ldapscripts/*.sample
 
-clean::
-	$(MAKE) distclean
+override_dh_installdocs:
+	dh_installdocs README TODO
+
+override_dh_installchangelogs:
+	dh_installchangelogs CHANGELOG
+
+override_dh_installexamples:
+	dh_installexamples etc/*.sample
+
+override_dh_fixperm:
+	dh_fixperm --exclude etc/ldapscripts/ldapscripts.passwd
