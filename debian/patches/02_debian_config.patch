@@ -8,10 +8,8 @@ Subject: Debian-specific changes in ldapscripts.conf and runtime
  Inclusion of runtime.debian added to runtime file.
 Forwarded: not-needed
 
-Index: ldapscripts/etc/ldapscripts.conf
-===================================================================
---- ldapscripts.orig/etc/ldapscripts.conf	2013-10-01 17:43:16.000000000 +0400
-+++ ldapscripts/etc/ldapscripts.conf	2013-10-01 17:43:16.000000000 +0400
+--- a/etc/ldapscripts.conf
++++ b/etc/ldapscripts.conf
 @@ -16,14 +16,22 @@
  #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  #  USA.
@@ -71,8 +69,8 @@ Index: ldapscripts/etc/ldapscripts.conf
  
  # User passwords recording
  # you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS
-@@ -90,7 +100,7 @@
- LOGFILE="/var/log/ldapscripts.log"
+@@ -94,7 +104,7 @@
+ SYSLOGLEVEL="info"
  
  # Temporary folder
 -TMPDIR="/tmp"
@@ -80,7 +78,7 @@ Index: ldapscripts/etc/ldapscripts.conf
  
  # Various binaries used within the scripts
  # Warning : they also use uuencode, date, grep, sed, cut, which... 
-@@ -119,12 +129,12 @@
+@@ -123,12 +133,12 @@
  
  # Character set conversion : $ICONVCHAR <-> UTF-8
  # Comment ICONVBIN to disable UTF-8 conversion
@@ -95,11 +93,9 @@ Index: ldapscripts/etc/ldapscripts.conf
  
  # Getent command to use - choose the ones used
  # on your system. Leave blank or comment for auto-guess.
-Index: ldapscripts/lib/runtime
-===================================================================
---- ldapscripts.orig/lib/runtime	2013-10-01 17:43:16.000000000 +0400
-+++ ldapscripts/lib/runtime	2013-10-01 17:43:16.000000000 +0400
-@@ -690,6 +690,9 @@
+--- a/lib/runtime
++++ b/lib/runtime
+@@ -720,6 +720,9 @@
  
  ### Source configuration file
  
