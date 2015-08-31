@@ -1,3 +1,14 @@
+ldapscripts (2.0.6-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.6 (Closes: #795927)
+  * Update debian/patches.
+  * Remove CDBS dependency and switch to DH 9+.
+  * debian/copyright: Convert to machine-readable format.
+  * Bump Standard's version, no changes needed.
+  * Update Vcs-* headers.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 31 Aug 2015 17:19:08 +0300
+
 ldapscripts (2.0.5-1) unstable; urgency=low
 
   * Imported Upstream version 2.0.5
