@@ -10,7 +10,7 @@ Forwarded: not-needed
 
 --- a/etc/ldapscripts.conf
 +++ b/etc/ldapscripts.conf
-@@ -16,14 +16,22 @@
+@@ -16,19 +16,28 @@
  #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  #  USA.
  
@@ -37,8 +37,15 @@ Forwarded: not-needed
 +#MSUFFIX="ou=Machines"      # Machines ou (just under $SUFFIX)
  
  # Authentication type
++# DEBIAN: value from /etc/nslcd.conf (sasl_mech) is used.
  # If empty, use simple authentication
-@@ -60,11 +68,12 @@
+ # Else, use the value as an SASL authentication mechanism
+-SASLAUTH=""
++#SASLAUTH=""
+ #SASLAUTH="GSSAPI"
+ 
+ # Simple authentication parameters
+@@ -60,11 +69,12 @@
  #GDUMMYMEMBER="uid=dummy,$USUFFIX,$SUFFIX"
  
  # User properties
@@ -55,7 +62,7 @@ Forwarded: not-needed
  
  # User passwords generation
  # Command-line used to generate a password for added users.
-@@ -72,11 +81,12 @@
+@@ -72,11 +82,12 @@
  # WARNING    !!!! This is evaluated, everything specified here will be run !
  # WARNING(2) !!!! Some systems (Linux) use a blocking /dev/random (waiting for enough entropy).
  #                 In this case, consider using /dev/urandom instead.
@@ -69,7 +76,7 @@ Forwarded: not-needed
  
  # User passwords recording
  # you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS
-@@ -94,7 +104,7 @@
+@@ -94,7 +105,7 @@
  SYSLOGLEVEL="info"
  
  # Temporary folder
@@ -78,7 +85,7 @@ Forwarded: not-needed
  
  # Various binaries used within the scripts
  # Warning : they also use uuencode, date, grep, sed, cut, which... 
-@@ -123,12 +133,12 @@
+@@ -123,12 +134,12 @@
  
  # Character set conversion : $ICONVCHAR <-> UTF-8
  # Comment ICONVBIN to disable UTF-8 conversion

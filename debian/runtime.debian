@@ -56,6 +56,8 @@ USUFFIX=$(getbase passwd 'ou=People')
 GSUFFIX=$(getbase group 'ou=Groups')
 MSUFFIX=$(getbase hosts 'ou=Hosts')
 
+SASLAUTH=$(getfield sasl_mech)
+
 # User properties
 [ -f /etc/adduser.conf ] && . /etc/adduser.conf
 USHELL=${DSHELL:-"/bin/bash"}
