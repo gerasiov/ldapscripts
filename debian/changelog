@@ -1,3 +1,15 @@
+ldapscripts (2.0.7-1) unstable; urgency=medium
+
+  [ James Valleroy ]
+  * Use SASLAUTH from /etc/nslcd.conf (sasl_mech). (Closes: #825240)
+
+  [ Alexander GQ Gerasiov ]
+  * Imported Upstream version 2.0.7
+  * debian/copyright: Bump year in copyright records.
+  * debian/control: Bump standard's version, no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Wed, 20 Jul 2016 00:44:06 +0300
+
 ldapscripts (2.0.6-1) unstable; urgency=medium
 
   * Imported Upstream version 2.0.6 (Closes: #795927)
