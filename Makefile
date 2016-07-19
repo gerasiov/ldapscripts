@@ -1,6 +1,6 @@
 #  Makefile for the lapscripts
 
-#  Copyright (C) 2007-2015 Ganaël LAPLANCHE
+#  Copyright (C) 2007-2016 Ganaël LAPLANCHE
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ PREFIX = /usr/local
 SHELL= /bin/sh
 NAME = ldapscripts
 #SUFFIX = -devel
-VERSION = 2.0.6
+VERSION = 2.0.7
 
 # Default installation paths
 SBINDIR = $(PREFIX)/sbin
