@@ -1,7 +1,7 @@
 #  runtime : this file is used by the ldapscripts, it sould not be used independently
 
 #  Copyright (C) 2005 Ganaël LAPLANCHE - Linagora
-#  Copyright (C) 2006-2015 Ganaël LAPLANCHE
+#  Copyright (C) 2006-2016 Ganaël LAPLANCHE
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -629,6 +629,13 @@ _findnextuid () {
 # Output : the dn of the first matching entry found ($_ENTRY)
 _findentry () {
   _ENTRY=$(_ldapsearch "$1" "$2" dn | grep "dn: " | head -n 1 | sed "s|dn: ||")
+}
+
+# Finds a list of entries in the LDAP directory
+# Input : base ($1), filter ($2)
+# Output : a list of dns for all the matching entries found ($_ENTRIES)
+_findentries () {
+  _ENTRIES=$(_ldapsearch "$1" "$2" dn | grep "dn: " | sed "s|dn: ||")
 }
 
 # Get a particular attribute from LDAP
