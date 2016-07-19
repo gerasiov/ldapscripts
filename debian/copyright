@@ -4,13 +4,13 @@ Upstream-Contact: Ganaël LAPLANCHE <ganael.laplanche@martymac.com>
 Source: http://contribs.martymac.com/
 
 Files: *
-Copyright: 2005-2015 (c) Ganaël LAPLANCHE <ganael.laplanche@martymac.com>
+Copyright: 2005-2016 (c) Ganaël LAPLANCHE <ganael.laplanche@martymac.com>
 License: GPL-2+
 
 Files: debian/
 Copyright: 
 	2005-2007 (c) Pierre Habouzit <madcoder@debian.org>
-	2009-2015 (c) Alexander GQ Gerasiov <gq@debian.org>
+	2009-2016 (c) Alexander GQ Gerasiov <gq@debian.org>
 License: GPL-2+
 
 License: GPL-2+
