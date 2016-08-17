@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "purge" ]; then
+    if [ -x "$(which ucf 2>/dev/null)" ]; then
+	ucf --purge /etc/ldapscripts/ldapscripts.conf
+    fi
+    if [ -x "$(which ucfr 2>/dev/null)" ]; then
+	ucfr --purge ldapscripts /etc/ldapscripts/ldapscripts.conf
+    fi
+    rm -f /etc/ldapscripts/ldapscripts.conf
+fi
+
+#DEBHELPER#
