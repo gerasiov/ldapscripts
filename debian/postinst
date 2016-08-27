@@ -4,11 +4,8 @@ set -e
 CONF=/etc/ldapscripts/ldapscripts.conf
 
 if [ "$1" = "configure" ]; then
-    zcat /usr/share/doc/ldapscripts/examples/ldapscripts.conf.gz \
-	 >$CONF.example
-    ucf --three-way $CONF.example $CONF
+    ucf --three-way /usr/share/ldapscripts/ldapscripts.conf $CONF
     ucfr ldapscripts $CONF
-    rm -f $CONF.example
 fi
 
 #DEBHELPER#
