@@ -17,5 +17,5 @@ override_dh_installchangelogs:
 override_dh_installexamples:
 	dh_installexamples etc/*.sample
 
-override_dh_fixperm:
-	dh_fixperm --exclude etc/ldapscripts/ldapscripts.passwd
+override_dh_fixperms:
+	dh_fixperms --exclude etc/ldapscripts/ldapscripts.passwd
