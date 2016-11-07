@@ -1,3 +1,9 @@
+ldapscripts (2.0.7-2) unstable; urgency=medium
+
+  * debian/rules: Fix typo. Thanks Chris Lamb <lamby@debian.org>. (Closes: #834578.)
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 07 Nov 2016 03:07:25 +0300
+
 ldapscripts (2.0.7-1) unstable; urgency=medium
 
   [ James Valleroy ]
