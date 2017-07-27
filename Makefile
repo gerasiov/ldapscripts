@@ -1,6 +1,6 @@
 #  Makefile for the lapscripts
 
-#  Copyright (C) 2007-2016 Ganaël LAPLANCHE
+#  Copyright (C) 2007-2017 Ganaël LAPLANCHE
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ PREFIX = /usr/local
 SHELL= /bin/sh
 NAME = ldapscripts
 #SUFFIX = -devel
-VERSION = 2.0.7
+VERSION = 2.0.8
 
 # Default installation paths
 SBINDIR = $(PREFIX)/sbin
@@ -83,10 +83,10 @@ help:
 # Configure target
 configure:
 	@echo -n 'Configuring scripts... '
-	@sed 's|^BINDPWDFILE=.*|BINDPWDFILE=\"$(ETCDIR)/$(PWDFILE)\"|g' 'etc/$(ETCFILE)' > 'etc/$(ETCFILE).patched'
-	@sed 's|^_CONFIGFILE=.*|_CONFIGFILE=\"$(ETCDIR)/$(ETCFILE)\"|g' 'lib/$(RUNFILE)' > 'lib/$(RUNFILE).patched'
+	@sed 's|^BINDPWDFILE=.*|BINDPWDFILE="$(ETCDIR)/$(PWDFILE)"|g' 'etc/$(ETCFILE)' > 'etc/$(ETCFILE).patched'
+	@sed '/^_CONFIGFILE=/s|^\(.*"\).*\(".*\)|\1$(ETCDIR)/$(ETCFILE)\2|g' 'lib/$(RUNFILE)' > 'lib/$(RUNFILE).patched'
 	@for i in $(SBINFILES) ; do \
-		sed 's|^_RUNTIMEFILE=.*|_RUNTIMEFILE=\"$(LIBDIR)/$(RUNFILE)\"|g' "sbin/$$i" > "sbin/$$i.patched" ; \
+		sed 's|^_RUNTIMEFILE=.*|_RUNTIMEFILE="$(LIBDIR)/$(RUNFILE)"|g' "sbin/$$i" > "sbin/$$i.patched" ; \
 	done
 	@echo 'ok.'
 
