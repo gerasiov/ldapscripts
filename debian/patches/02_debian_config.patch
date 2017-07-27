@@ -102,13 +102,13 @@ Forwarded: not-needed
  # on your system. Leave blank or comment for auto-guess.
 --- a/lib/runtime
 +++ b/lib/runtime
-@@ -720,6 +720,9 @@
+@@ -729,6 +729,9 @@
  
  ### Source configuration file
  
 +_RUNTIME_DEBIAN="/usr/share/ldapscripts/runtime.debian"
 +. "$_RUNTIME_DEBIAN" || end_die "Unable to source runtime.debian, exiting..."
 +
- _CONFIGFILE="/etc/ldapscripts/ldapscripts.conf"
+ _CONFIGFILE=${LDAPSCRIPTS_CONF:="/etc/ldapscripts/ldapscripts.conf"}
  . "$_CONFIGFILE" || end_die "Unable to source configuration file ($_CONFIGFILE), exiting..."
  
