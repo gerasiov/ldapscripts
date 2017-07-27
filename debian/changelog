@@ -1,3 +1,10 @@
+ldapscripts (2.0.8-1) unstable; urgency=medium
+
+  * New upstream version 2.0.8
+  * debian/patches refreshed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Thu, 27 Jul 2017 18:12:35 +0300
+
 ldapscripts (2.0.7-2) unstable; urgency=medium
 
   * debian/rules: Fix typo. Thanks Chris Lamb <lamby@debian.org>. (Closes: #834578.)
