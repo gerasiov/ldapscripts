@@ -2,6 +2,7 @@ ldapscripts (2.0.8-2) UNRELEASED; urgency=medium
 
   * Trim trailing whitespace.
   * Use versioned copyright format URI.
+  * Use secure URI in debian/watch.
 
  -- Debian Janitor <janitor@jelmer.uk>  Wed, 21 Aug 2019 08:28:28 +0000
 
