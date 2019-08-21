@@ -1,3 +1,9 @@
+ldapscripts (2.0.8-2) UNRELEASED; urgency=medium
+
+  * Trim trailing whitespace.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Wed, 21 Aug 2019 08:28:28 +0000
+
 ldapscripts (2.0.8-1) unstable; urgency=medium
 
   * New upstream version 2.0.8
@@ -206,4 +212,3 @@ ldapscripts (1.2-1) unstable; urgency=low
   * Initial Release (closes: #324296).
 
  -- Pierre Habouzit <madcoder@debian.org>  Sun, 21 Aug 2005 16:23:01 +0200
-
