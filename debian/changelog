@@ -7,6 +7,7 @@ ldapscripts (2.0.8-2) UNRELEASED; urgency=medium
   * Set upstream metadata fields: Archive, Contact, Name.
   * debian/copyright: use spaces rather than tabs to start continuation
     lines.
+  * Wrap long lines in changelog entries: 2.0.7-2.
 
  -- Debian Janitor <janitor@jelmer.uk>  Wed, 21 Aug 2019 08:28:28 +0000
 
@@ -19,7 +20,8 @@ ldapscripts (2.0.8-1) unstable; urgency=medium
 
 ldapscripts (2.0.7-2) unstable; urgency=medium
 
-  * debian/rules: Fix typo. Thanks Chris Lamb <lamby@debian.org>. (Closes: #834578.)
+  * debian/rules: Fix typo. Thanks Chris Lamb <lamby@debian.org>.
+    (Closes: #834578.)
 
  -- Alexander GQ Gerasiov <gq@debian.org>  Mon, 07 Nov 2016 03:07:25 +0300
 
