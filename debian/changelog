@@ -9,6 +9,8 @@ ldapscripts (2.0.8-2) UNRELEASED; urgency=medium
     lines.
   * Wrap long lines in changelog entries: 2.0.7-2.
   * Set upstream metadata fields: Repository.
+  * Remove obsolete fields Contact, Name from debian/upstream/metadata
+    (already present in machine-readable debian/copyright).
 
  -- Debian Janitor <janitor@jelmer.uk>  Wed, 21 Aug 2019 08:28:28 +0000
 
