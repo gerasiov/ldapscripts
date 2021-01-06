@@ -1,5 +1,6 @@
-ldapscripts (2.0.8-2) UNRELEASED; urgency=medium
+ldapscripts (2.0.8-2) unstable; urgency=medium
 
+  [ Debian Janitor ]
   * Trim trailing whitespace.
   * Use versioned copyright format URI.
   * Use secure URI in debian/watch.
@@ -12,7 +13,10 @@ ldapscripts (2.0.8-2) UNRELEASED; urgency=medium
   * Remove obsolete fields Contact, Name from debian/upstream/metadata
     (already present in machine-readable debian/copyright).
 
- -- Debian Janitor <janitor@jelmer.uk>  Wed, 21 Aug 2019 08:28:28 +0000
+  [ Alexander Gerasiov ]
+  * d/control: Bump Standards-Version, no changes needed.
+
+ -- Alexander GQ Gerasiov <gq@debian.org>  Wed, 06 Jan 2021 20:07:50 +0300
 
 ldapscripts (2.0.8-1) unstable; urgency=medium
 
