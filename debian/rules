@@ -7,6 +7,7 @@ override_dh_auto_install:
 	$(MAKE) install DESTDIR=debian/ldapscripts PREFIX=/usr ETCDIR=/etc/ldapscripts LIBDIR=/usr/share/ldapscripts MANDIR=/usr/share/man
 	cp debian/runtime.debian debian/ldapscripts/usr/share/ldapscripts
 	rm debian/ldapscripts/etc/ldapscripts/*.sample
+	mv debian/ldapscripts/etc/ldapscripts/ldapscripts.conf debian/ldapscripts/usr/share/ldapscripts/
 
 override_dh_installdocs:
 	dh_installdocs README TODO

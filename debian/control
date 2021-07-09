@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/gerasiov/ldapscripts
 
 Package: ldapscripts
 Architecture: all
-Depends: ${misc:Depends}, ldap-utils
+Depends: ${misc:Depends}, ldap-utils, ucf
 Recommends: sharutils, pwgen
 Suggests: nslcd
 Description: Add and remove users and groups (stored in a LDAP directory)

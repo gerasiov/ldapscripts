@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+CONF=/etc/ldapscripts/ldapscripts.conf
+
+if [ "$1" = "configure" ]; then
+    ucf --three-way /usr/share/ldapscripts/ldapscripts.conf $CONF
+    ucfr ldapscripts $CONF
+fi
+
+#DEBHELPER#
