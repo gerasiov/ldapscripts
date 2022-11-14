@@ -1,2 +1,2 @@
-ldapscripts: non-standard-file-perm etc/ldapscripts/ldapscripts.passwd 0640 != 0644
+ldapscripts: non-standard-file-perm 0640 != 0644 [etc/ldapscripts/ldapscripts.passwd]
 
